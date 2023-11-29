@@ -40,3 +40,11 @@ WHERE UserID IN (
     ) AS CharacterCounts
     WHERE CharacterCounts.CollectedCharacters >= 20
 );
+
+UPDATE Medals
+SET Cost = Cost * 1.2
+WHERE MedalID IN (
+    SELECT MedalID
+    FROM User_Lobby_Medals
+    WHERE LobbyID IN (SELECT LobbyID FROM Lobby WHERE Lobby_Type = 'Private')
+);
