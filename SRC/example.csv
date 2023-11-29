@@ -1,1 +1,13 @@
 
+start_number = 10
+end_number = 1000
+
+for i in range(start_number, end_number + 1):
+    username = f'User{i}'
+    password = f'PASS.{i}'
+    email = f'User.{i}@example.com'
+
+    print(f"('{username}', '{username}', '{username}', '{password}', '{email}'),")
+
+
+//Generate thousands of user credentials.
