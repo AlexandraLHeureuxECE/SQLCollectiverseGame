@@ -1,4 +1,5 @@
 const mysql = require('mysql2');
+require('dotenv').config();
 
 const pool = mysql.createPool({
     host: process.env.MYSQL_HOST,
@@ -8,10 +9,6 @@ const pool = mysql.createPool({
 });
 
 console.log('Connected to database');
-console.log('MYSQL_HOST: ' + process.env.MYSQL_HOST);
-console.log('MYSQL_USER: ' + process.env.MYSQL_USER);
-console.log('MYSQL_DATABASE: ' + process.env.MYSQL_DATABASE);
-console.log('MYSQL_PASSWORD: ' + process.env.MYSQL_PASSWORD);
 
 process.on('SIGINT', () => {
     pool.end((err) => {
