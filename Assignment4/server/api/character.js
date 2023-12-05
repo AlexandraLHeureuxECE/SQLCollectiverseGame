@@ -31,8 +31,8 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Route to put characters into a lobby
-router.post('/put-into-lobby', async (req, res) => {
+// Route to add specific characters array [1,2,3] into a lobby 
+router.post('/add-into-lobby', async (req, res) => {
     const { lobbyId, characterIds } = req.body;
 
     try {
@@ -44,7 +44,8 @@ router.post('/put-into-lobby', async (req, res) => {
         }
 
         // Step 2: Check if the characters exist
-        const [characters] = await db.execute('SELECT * FROM characters WHERE CharacterID IN (?)', [characterIds]);
+        const placeholders = characterIds.map(() => '?').join(', ');
+        const [characters] = await db.execute(`SELECT * FROM characters WHERE CharacterID IN (${placeholders})`, characterIds);
 
         if (characters.length !== characterIds.length) {
             return res.status(404).json({ error: 'One or more characters not found' });
@@ -56,6 +57,39 @@ router.post('/put-into-lobby', async (req, res) => {
         }
 
         res.json({ message: 'Characters put into the lobby successfully' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+// Route to add all characters to a lobby
+router.post('/add-all-into-lobby', async (req, res) => {
+    const { lobbyId } = req.body;
+
+    try {
+        // Step 1: Check if the lobby exists
+        const [lobby] = await db.execute('SELECT * FROM lobby WHERE LobbyID = ?', [lobbyId]);
+
+        if (lobby.length === 0) {
+            return res.status(404).json({ error: 'Lobby not found' });
+        }
+
+        // Step 2: Fetch all characters
+        const [characters] = await db.execute('SELECT CharacterID FROM characters');
+
+        if (characters.length === 0) {
+            return res.status(404).json({ error: 'No characters found' });
+        }
+
+        // Step 3: Prepare the data for insertion
+        const insertData = characters.map((character) => [lobbyId, character.CharacterID]);
+
+        // Step 4: Insert all characters into the lobby
+        const placeholders = insertData.map(() => '(?, ?)').join(', ');
+        await db.execute(`INSERT INTO lobby_character (LobbyID, CharID) VALUES ${placeholders}`, [].concat(...insertData));
+
+        res.json({ message: 'All characters added to the lobby successfully' });
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Internal Server Error' });
