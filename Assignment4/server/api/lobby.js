@@ -1,18 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../database');
-const { route } = require('./users');
-
 
 // Route to create a new lobby
 router.post('/create', async (req, res) => {
+    const { title, type, code, adminId } = req.body;
+
     try {
-        const { title, type, code, adminId } = req.body;
-        const [results, fields] = await db.execute(
+        const [results] = await db.execute(
             'INSERT INTO lobby (Lobby_Title, Lobby_Type, Lobby_Code, AdminID) VALUES (?, ?, ?, ?)',
             [title, type, code, adminId]
         );
-        res.send(results);
+
+        res.json({ message: 'Lobby created successfully', lobbyId: results.insertId });
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Internal Server Error' });
@@ -22,24 +22,9 @@ router.post('/create', async (req, res) => {
 // Route to get all lobbies
 router.get('/', async (req, res) => {
     try {
-        const [rows, fields] = await db.execute('SELECT * FROM lobby');
-        res.send(rows);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
+        const [lobbies] = await db.execute('SELECT * FROM lobby');
 
-// Route to get a lobby by id
-router.get('/:id', async (req, res) => {
-    try {
-        const [rows, fields] = await db.execute('SELECT * FROM lobby WHERE LobbyID = ?', [req.params.id]);
-        // Check if the lobby with the specified ID exists
-        if (rows.length === 0) {
-            res.status(404).json({ error: 'Lobby not found' });
-        } else {
-            res.send(rows[0]); // Assuming you want to send the first lobby (if multiple lobbies have the same ID)
-        }
+        res.json(lobbies);
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Internal Server Error' });
@@ -49,8 +34,53 @@ router.get('/:id', async (req, res) => {
 // Route to get all lobbies that are public
 router.get('/public', async (req, res) => {
     try {
-        const [rows, fields] = await db.execute('SELECT * FROM lobby WHERE Lobby_Type = "public"');
-        res.send(rows);
+        const [publicLobbies] = await db.execute('SELECT * FROM lobby WHERE Lobby_Type = "public"');
+
+        res.json(publicLobbies);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+// Route to get a lobby by id
+router.get('/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const [lobbies] = await db.execute('SELECT * FROM lobby WHERE LobbyID = ?', [id]);
+
+        // Check if the lobby with the specified ID exists
+        if (lobbies.length === 0) {
+            return res.status(404).json({ error: 'Lobby not found' });
+        }
+
+        res.json(lobbies[0]); // Assuming you want to send the first lobby (if multiple lobbies have the same ID)
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+// Route to get all users in a lobby
+router.get('/:id/users', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const [users] = await db.execute('SELECT * FROM user_lobby WHERE LobbyID = ?', [id]);
+        res.json(users);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}); 
+
+// Route to get all lobbies that a user is in
+router.get('/user/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const [lobbies] = await db.execute('SELECT * FROM user_lobby WHERE UserID = ?', [id]);
+
+        res.json(lobbies);
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Internal Server Error' });
@@ -141,29 +171,5 @@ router.post('/leave', async (req, res) => {
     }
 });
 
-
-
-
-// Route to get all users in a lobby
-router.get('/:id/users', async (req, res) => {
-    try {
-        const [rows, fields] = await db.execute('SELECT * FROM lobby_user WHERE LobbyID = ?', [req.params.id]);
-        res.send(rows);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-}); 
-
-// Route to get all lobbies that a user is in
-router.get('/user/:id', async (req, res) => {
-    try {
-        const [rows, fields] = await db.execute('SELECT * FROM lobby_user WHERE UserID = ?', [req.params.id]);
-        res.send(rows);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
 
 module.exports = router;
