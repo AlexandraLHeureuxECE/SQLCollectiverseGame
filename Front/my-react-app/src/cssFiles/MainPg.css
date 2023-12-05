@@ -1,0 +1,119 @@
+/* MainPg.css */
+
+/* Basic reset for good measure */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Apply styles to the main-page */
+.main-page {
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f0f0; /* Light gray background */
+  min-height: 100vh; /* Full view height */
+}
+
+/* Style the header */
+header {
+  background-color: #333; /* Dark background */
+  color: white; /* White text color */
+  display: flex;
+  justify-content: center; /* Center items horizontally */
+  align-items: center; /* Center items vertically */
+  padding: 10px 20px;
+}
+
+/* Header content wrapper */
+.header-content {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Center the title with flexbox */
+header h1 {
+  position: absolute; /* Absolute positioning */
+  left: 50%;
+  transform: translateX(-50%); /* Shift to the left by 50% of its own width */
+  margin: 0;
+  animation: popIn 1s ease forwards, colorful 8s ease-in-out infinite;
+  font-size: 2.5em; /* Larger font size for emphasis */
+  font-weight: bold;
+  font-family: fan;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Soft shadow for depth */
+}
+
+/* Style for header buttons */
+.header-buttons {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+}
+
+/* Style the buttons */
+.sign-up-button, .sign-in-button {
+  padding: 10px 20px;
+  background-color: #4CAF50; /* Green background */
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.sign-up-button:hover, .sign-in-button:hover {
+  background-color: #367c39; /* Darker green on hover */
+}
+
+/* Main content styles */
+main {
+  padding: 20px;
+}
+
+/* Section styles */
+section {
+  margin-bottom: 20px;
+}
+
+/* Footer styles */
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+@keyframes popIn {
+  0% {
+    transform: translateX(-50%) scale(0.5);
+    opacity: 0;
+  }
+  60% {
+    transform: translateX(-50%) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+@keyframes colorful {
+  0% {
+    color: #ff6347; /* Tomato */
+  }
+  25% {
+    color: #1e90ff; /* Dodgerblue */
+  }
+  50% {
+    color: #32cd32; /* Limegreen */
+  }
+  75% {
+    color: #ff8c00; /* Darkorange */
+  }
+  100% {
+    color: #ff6347; /* Tomato */
+  }
+}
