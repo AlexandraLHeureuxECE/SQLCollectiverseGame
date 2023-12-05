@@ -87,7 +87,7 @@ router.get('/user/:id', async (req, res) => {
     }
 });
 
-// Route to allow users to join a lobby by code
+// Route to allow users to join a lobby by the lobby code
 router.post('/join', async (req, res) => {
     const { code, userId } = req.body;
 
@@ -170,6 +170,5 @@ router.post('/leave', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
-
 
 module.exports = router;
