@@ -26,11 +26,21 @@ const LoginPage = () => {
 
       if (response.ok) {
         console.log('Login successful');
-        navigate('/Home'); // Use navigate to redirect
+        alert('Login successful');
+
+        // Delete the user id from local storage
+        localStorage.removeItem('user');
+
+        //Setting the user id in local storage
+        const user = await response.json();
+        localStorage.setItem('user', JSON.stringify(user));
+        console.log(user);
+
+        // Navigate to the home page
+        navigate('/Home'); 
       } else {
         const errorData = await response.json();
         console.error('Login failed:', errorData.error);
-        // Handle login failure (e.g., show an error message)
       }
     } catch (error) {
       console.error('An error occurred during login:', error);
