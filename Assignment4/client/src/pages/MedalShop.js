@@ -114,7 +114,7 @@ const MedalShop = () => {
             <ul>
               {medals.map(medal => (
                 <li key={medal.MedalID} onClick={() => handleMedalSelect(medal)}>
-                  {medal.Medal_Name} - Cost: {medal.Cost}
+                  {medal.MedalName} - Cost: {medal.Cost}
                 </li>
               ))}
             </ul>
