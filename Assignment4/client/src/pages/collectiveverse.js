@@ -1,18 +1,31 @@
 // collectiveverse.js
-
+import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './../cssFiles/collectiverse.css';
 const CharacterList = () => {
     const [characters, setCharacters] = useState([]);
     const [selectedCharacter, setSelectedCharacter] = useState(null);
     const [userCharacters, setUserCharacters] = useState([]);
-    const userId =  2; // Replace with your user ID
+
     const lobbyId = 1000; // Replace with your lobby ID
     const shuffleAmount=10;
     const [selectedCharacterId, setSelectedCharacterId] = useState(null);
+    
+    const [userData, setUserData] = useState({
+        first_name: '',
+        last_name: '',
+        username: '',
+        email: '',
+      });
+    // Get the user ID from local storage
+
 
     
     useEffect(() => {
+      
+        console.log(lobbyId);
+        
         axios.get('/api/character')
             .then(response => {
                 setCharacters(response.data);
@@ -21,8 +34,15 @@ const CharacterList = () => {
                 console.error('Error fetching data: ', error);
             });
     }, []);
+    const userArray = JSON.parse(localStorage.getItem('user'));
+    const userId = userArray[0].UserID;
+    console.log(userId);
+    fetch(`/api/users/${userId}`)
+      .then(response => response.json())
+      .then(data => setUserData(data))
+      .catch(error => console.error('Error fetching user data:', error));
 
-
+    
     const deleteCharacter = () => {
         if (selectedCharacterId) {
             axios.delete(`/api/character/${selectedCharacterId}`)
@@ -92,7 +112,7 @@ const CharacterList = () => {
     const addCharacterToUser = () => {
         const lastAdd = localStorage.getItem('lastAdd');
         const now = Date.now();
-
+console.log(lobbyId);
         if (lastAdd && now - lastAdd < 3600000) {
             alert('You can only add a character once per hour');
             return;
@@ -118,29 +138,37 @@ const CharacterList = () => {
 
     return (
         <div>
-            <button onClick={shuffleCharacters}>Shuffle Characters</button>
+            <h1>Welcome, {userData.first_name}!</h1>
+            <button onClick={shuffleCharacters}>Shuffle Characters</button><p></p>
             <button onClick={getUserCharacters}>View My Characters</button><p></p>
-            <button onClick={resetTimestamp}>Reset Timestamp</button>
+            <button onClick={resetTimestamp}>Reset Timestamp</button><p></p>
+            <Link to="/MedalShop">
+            <button>Go to Medal Shop</button>
+        </Link>
 
-            <select onChange={e => setSelectedCharacterId(e.target.value)}>
-                <option value="">Select a character to delete</option>
-                {userCharacters.map(character => (
-                    <option key={character.CharacterID} value={character.CharacterID}>
-                        {character.Character_Name}
-                    </option>
-                ))}
-            </select>
-            <button onClick={deleteCharacter}>Delete Character</button>
+        <Link to="/Home">
+            <button>Go to Home</button>
+        </Link>
+
+            
             {selectedCharacter && (
                 <div>
                     <h2>{selectedCharacter.Character_Name}</h2>
+                    
+                    <p>{selectedCharacter.Nickname}</p>
+                    
+                    <p>{selectedCharacter.Origin}</p>
                     <p>{selectedCharacter.Character_Value}</p>
+                    
                     <button onClick={addCharacterToUser}>Add Character to User</button>
                     </div>
             )}
             {userCharacters.map(character => (
                 <div key={character.CharacterID}>
                     <h2>{character.Character_Name}</h2>
+                    <p>{character.Nickname}</p>
+                    <p>{character.Origin}</p>
+                   
                     <p>{character.Character_Value}</p>
                 </div>
             ))}

@@ -1,6 +1,7 @@
 // MedalAddForm.jsx
 import React, { useState } from 'react';
 
+
 const MedalAddForm = ({ onAdd }) => {
   const [newMedal, setNewMedal] = useState({
     Medal_Name: '',

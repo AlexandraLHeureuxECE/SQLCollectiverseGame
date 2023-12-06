@@ -1,0 +1,25 @@
+.lobby-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.lobby-table th,
+.lobby-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.lobby-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+/* Style for the account management button */
+.account-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px 0;
+    border: none;
+    cursor: pointer;
+}

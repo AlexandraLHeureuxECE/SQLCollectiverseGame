@@ -1,0 +1,109 @@
+/* medalShop.css */
+
+body {
+    background-color: #0a0a0a; /* Keeping the dark theme */
+    color: #fff;
+    font-family: 'Press Start 2P', cursive; /* Retro gaming font for consistency */
+  }
+  
+  .medal-button {
+    background-color: #ffcc00; /* Golden color for medals */
+    border: none;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 0 4px #d4a00f;
+    transition: all 0.3s ease;
+  }
+  
+  .medal-button:hover {
+    background-color: #e6b800;
+  }
+  
+  .medal-button:active {
+    background-color: #cc9f00;
+    box-shadow: 0 2px #666;
+    transform: translateY(2px);
+  }
+  
+  .medal-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .medal-card {
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+    transition: transform 0.2s ease;
+  }
+  
+  .medal-card:hover {
+    transform: scale(1.05);
+    border-color: #ffcc00;
+  }
+  
+  .medal-name {
+    font-size: 1.5em;
+    color: #ffcc00; /* Golden color for the medal names */
+  }
+  
+  .medal-value {
+    color: #f2f2f2;
+  }
+  
+  .randomize-button {
+    animation: shake 1.5s infinite;
+  }
+  
+  @keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+  }
+  /* medalShop.css - Additions */
+
+  
+
+
+.medal-item {
+    cursor: pointer;
+    position: relative;
+    padding-right: 30px; /* Space for the arrow icon at the end */
+    color: #ffcc00; /* Golden color to match the theme */
+    transition: color 0.3s ease; /* Smooth transition for hover effect */
+  }
+  
+  .medal-item:hover {
+    color: #e6b800; /* Slightly darker shade when hovered */
+  }
+  
+  .medal-item::after {
+    content: ' ➤'; /* Arrow character, space added before the arrow for separation */
+    color: #fff; /* White color for the arrow */
+    font-size: 1em; /* Adjust size as needed */
+  }
+  
+  
+  /* Add additional styles as needed */
+  

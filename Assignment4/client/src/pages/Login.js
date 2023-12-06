@@ -37,7 +37,7 @@ const LoginPage = () => {
        
         console.log('Login successful');
         alert('Login successful');
-        // localStorage.setItem('userId', response.data[0].UserID);
+       
         navigate('/Home'); 
       } else {
         const errorData = await response.json();

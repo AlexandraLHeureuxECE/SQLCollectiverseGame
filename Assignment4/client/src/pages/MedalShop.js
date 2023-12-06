@@ -1,3 +1,7 @@
+import { Link } from 'react-router-dom';
+import '../cssFiles/Medalshop.css'; // Make sure the path is correct
+
+
 import React, {
     useState,
     useEffect
@@ -22,11 +26,6 @@ const MedalShop = () => {
         const userArray = JSON.parse(localStorage.getItem('user'));
         const userId = userArray[0].UserID;
         const lobbyId = 1000;
-
-
-
-
-
 
         fetch(`http://localhost:3000/api/character/user/${userId}/lobby/${lobbyId}`)
             .then(response => response.json())
@@ -53,29 +52,10 @@ const MedalShop = () => {
         if (calculateUserCharacterValue() >= selectedMedal.Cost) {
             // Make a backend request to add the selected medal to the user
 
-
-
-
-
-
-
-
-
-
-
             // TO BE EDITED WHEN CONNECTED WITH OTHER CODE
             const userArray = JSON.parse(localStorage.getItem('user'));
             const userId = userArray[0].UserID;
             const lobbyId = 1000;
-
-
-
-
-
-
-
-
-
 
             fetch('http://localhost:3000/api/medal/add-to-user', {
                     method: 'POST',
@@ -112,12 +92,16 @@ const MedalShop = () => {
           <div>
             <h2>Available Medals</h2>
             <ul>
-              {medals.map(medal => (
-                <li key={medal.MedalID} onClick={() => handleMedalSelect(medal)}>
-                  {medal.MedalName} - Cost: {medal.Cost}
-                </li>
-              ))}
-            </ul>
+  {medals.map(medal => (
+    <li key={medal.MedalID} 
+        className="medal-item" 
+        onClick={() => handleMedalSelect(medal)}>
+      {`${medal.MedalName} - Cost: ${medal.Cost}`}
+    </li>
+  ))}
+</ul>
+
+
           </div>
           <div>
             <h2>User Characters</h2>
@@ -133,7 +117,7 @@ const MedalShop = () => {
           {selectedMedal && (
             <div>
               <h2>Selected Medal</h2>
-              <p>{selectedMedal.Medal_Name} - Cost: {selectedMedal.Cost}</p>
+              <p>{selectedMedal.MedalName} - Cost: {selectedMedal.Cost}</p>
               <button onClick={handleClaimMedal}>Claim Medal</button>
             </div>
           )}
@@ -146,6 +130,14 @@ const MedalShop = () => {
                 </li>
               ))}
             </ul>
+            <Link to="/collectiveverse">
+            <button>Collect more charecters</button>
+        </Link>
+
+        <Link to="/Home">
+            <button>Go to Home</button>
+        </Link>
+
           </div>
         </div>
     );

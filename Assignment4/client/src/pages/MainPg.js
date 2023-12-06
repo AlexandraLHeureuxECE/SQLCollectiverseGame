@@ -12,7 +12,6 @@ const MainPage = () => {
             {/* Use the Link component for navigation */}
             <Link to="/SignUp" className="sign-up-button">SIGN UP</Link>
             <Link to="/Login" className="sign-in-button">SIGN IN</Link>
-            <Link to="/AdminSignup" className="admin-button">ADMIN</Link>
           </div>
         </div>
       </header>
@@ -24,9 +23,7 @@ const MainPage = () => {
             embark on adventures, and build your unique collection.
           </p>
         </section>
-        <section className="get-started">
-          <h2>Get Started</h2>
-        </section>
+
       </main>
       <footer>
         <p>© 2023 Collectiverse. All rights reserved.</p>
