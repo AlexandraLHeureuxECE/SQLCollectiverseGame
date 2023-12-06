@@ -18,6 +18,15 @@ app.use('/api/trade', tradesRouter);
 
 const port = process.env.PORT || 3000;
 
+// Timeout after 10 seconds
+app.use((req, res, next) => {
+    res.setTimeout(10000, () => {
+        res.status(408).json({ error: 'Request Timeout' });
+    });
+    next();
+});
+
 app.listen(port, () => console.log('Server is listening on port: ' + port));
+
 
 
