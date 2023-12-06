@@ -55,7 +55,7 @@ header h1 {
 }
 
 /* Style the buttons */
-.sign-up-button, .sign-in-button {
+.sign-up-button, .sign-in-button, .admin-button {
   padding: 10px 20px;
   background-color: #4CAF50; /* Green background */
   border: none;

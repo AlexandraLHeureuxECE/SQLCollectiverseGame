@@ -1,0 +1,13 @@
+
+.toggle-button {
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .expanded-details {
+    margin-left: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f9f9f9;
+  }
+  
