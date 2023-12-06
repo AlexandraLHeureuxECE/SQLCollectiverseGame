@@ -40,7 +40,7 @@ router.post('/login', async (req, res) => {
 
         if (results.length === 0) {
             // No matching user found
-            return res.status(401).json({ error: 'Invalid username or password' });
+            return res.status(401).json({ message: 'Invalid username or password' });
         }
 
 
