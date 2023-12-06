@@ -233,6 +233,19 @@ router.delete('/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
+        // Check if the character exists
+        const [characterResults] = await db.execute('SELECT * FROM characters WHERE CharacterID = ?', [id]);
+
+        if (characterResults.length === 0) {
+            return res.status(404).json({ error: 'Character not found' });
+        }
+
+        // Manually delete related records in lobby_character table
+        await db.execute('DELETE FROM lobby_character WHERE CharID = ?', [id]);
+         // Delete the character from user_lobby_character table
+        await db.execute('DELETE FROM user_lobby_character WHERE CharID = ?', [id]);
+
+        // Now, delete the character
         const [results] = await db.execute('DELETE FROM characters WHERE CharacterID = ?', [id]);
 
         if (results.affectedRows === 0) {
