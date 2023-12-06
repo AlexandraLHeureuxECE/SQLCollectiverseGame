@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link
-import './../cssFiles/MainPg.css'; // Make sure the path is correct
+import '../cssFiles/MainPg.css'; // Make sure the path is correct
 
 const MainPage = () => {
   return (
