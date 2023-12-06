@@ -16,7 +16,7 @@ app.use('/api/character', charactersRouter);
 app.use('/api/medal', medalsRouter);
 app.use('/api/trade', tradesRouter);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 // Timeout after 10 seconds
 app.use((req, res, next) => {

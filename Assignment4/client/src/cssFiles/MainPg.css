@@ -1,0 +1,160 @@
+/* MainPg.css */
+
+/* Basic reset for good measure */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Apply styles to the main-page */
+main {
+  min-height: 100vh; /* This will make sure 'main' takes up at least the full height of the viewport */
+  padding: 20px;
+  background-image: url('https://files.oaiusercontent.com/file-Q4lcNX1lMkcHJcAoYOdnTVaL?se=2023-12-06T01%3A16%3A58Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3Dbac0e5a6-688c-4bab-af10-67726ee5335f.webp&sig=DNWVpFON9z9YU4WJHLVYh3kdclSXdlDaYfajQwtd28A%3D');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Style the header */
+header {
+  background-color: #333; /* Dark background */
+  color: white; /* White text color */
+  display: flex;
+  justify-content: center; /* Center items horizontally */
+  align-items: center; /* Center items vertically */
+  padding: 10px 20px;
+}
+
+/* Header content wrapper */
+.header-content {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Center the title with flexbox */
+header h1 {
+  position: absolute; /* Absolute positioning */
+  left: 50%;
+  transform: translateX(-50%); /* Shift to the left by 50% of its own width */
+  margin: 0;
+  animation: popIn 1s ease forwards, colorful 8s ease-in-out infinite;
+  font-size: 2.5em; /* Larger font size for emphasis */
+  font-weight: bold;
+  font-family: 'Press Start 2P', cursive; /* Updated font-family to video game style */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Soft shadow for depth */
+}
+
+/* Style for header buttons */
+.header-buttons {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+}
+
+/* Style the buttons */
+.sign-up-button, .sign-in-button {
+  padding: 10px 20px;
+  background-color: #4CAF50; /* Green background */
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.sign-up-button:hover, .sign-in-button:hover {
+  background-color: #367c39; /* Darker green on hover */
+}
+
+/* Main content styles */
+main {
+  padding: 20px;
+}
+
+/* Section styles */
+section {
+  margin-bottom: 20px;
+}
+
+/* Footer styles */
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+@keyframes popIn {
+  0% {
+    transform: translateX(-50%) scale(0.5);
+    opacity: 0;
+  }
+  60% {
+    transform: translateX(-50%) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+@keyframes colorful {
+  0% {
+    color: #ff6347; /* Tomato */
+  }
+  25% {
+    color: #1e90ff; /* Dodgerblue */
+  }
+  50% {
+    color: #32cd32; /* Limegreen */
+  }
+  75% {
+    color: #ff8c00; /* Darkorange */
+  }
+  100% {
+    color: #ff6347; /* Tomato */
+  }
+}
+
+/* Section title styles */
+.game-introduction h2, .get-started h2 {
+  color: #FFFFFF; /* Keep white color for text */
+  font-weight: 700; /* Make font bolder */
+  text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8); /* Increase text shadow for better legibility */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  display: inline-block; /* Only as wide as necessary */
+  padding: 5px 10px; /* Add some padding around the text */
+  border-radius: 5px; /* Optional: rounded corners for aesthetic */
+  margin-bottom: 0.5em; /* Space below the title */
+  animation: fadeInUp 1s ease-out;
+}
+
+/* Section paragraph styles */
+.game-introduction p, .get-started p {
+  color: #FFFFFF; /* White color for better visibility */
+  font-weight: 500; /* Slightly bolder font */
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8); /* Increase text shadow for better legibility */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  display: inline-block; /* Only as wide as necessary */
+  padding: 5px 10px; /* Add some padding around the text */
+  border-radius: 5px; /* Optional: rounded corners for aesthetic */
+  animation: fadeInUp 1s ease-out;
+}
+
+/* Fade in Up animation */
+@keyframes fadeInUp {
+  from {
+    transform: translate3d(0, 20px, 0);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
