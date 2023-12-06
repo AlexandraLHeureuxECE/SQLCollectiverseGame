@@ -90,12 +90,13 @@ function Dashboard() {
   };
   
   return (
+    <div className ="h2dashboard">
     <div className="dashboard">
-            <div className ="h2dashboard">
-      <h1>Dashboard</h1>
+            
+      <h1 className="h2dashboard">Dashboard</h1>
       <div className="user-info">
 
-        <h2>User Info</h2>
+        <h2 className="h2dashboard">User Info</h2>
         <p>Name: {userData.first_name} {userData.last_name}</p>
         <p>Username: {userData.username}</p>
         <p>Email: {userData.email}</p>
