@@ -12,6 +12,11 @@ router.post('/create', async (req, res) => {
             [Character_Name, Character_Value, Char_Icon, Nickname, Origin, AdminID]
         );
 
+        // Duplicate entry error
+        if (results.affectedRows === 0) {
+            return res.status(409).json({ error: 'Character already exists' });
+        }
+
         res.json({ message: 'Character created successfully', characterId: results.insertId });
     } catch (err) {
         console.error(err);

@@ -31,17 +31,17 @@ function Home() {
 
     // Fetch lobbies joined by the user
     fetch(`/api/lobby/user/${userId}`)
-  .then(response => response.json())
-  .then(joinedLobbies => {
-    // Fetch details for each joined lobby
-    const lobbyDetailsPromises = joinedLobbies.map(lobby =>
-      fetch(`/api/lobby/${lobby.LobbyID}`)
-        .then(response => response.json())
-    );
-    return Promise.all(lobbyDetailsPromises);
-  })
-  .then(lobbyDetails => setJoinedLobbies(lobbyDetails))
-  .catch(error => console.error('Error fetching joined lobbies:', error));
+    .then(response => response.json())
+    .then(joinedLobbies => {
+      // Fetch details for each joined lobby
+      const lobbyDetailsPromises = joinedLobbies.map(lobby =>
+        fetch(`/api/lobby/${lobby.LobbyID}`)
+          .then(response => response.json())
+      );
+      return Promise.all(lobbyDetailsPromises);
+    })
+    .then(lobbyDetails => setJoinedLobbies(lobbyDetails))
+    .catch(error => console.error('Error fetching joined lobbies:', error));
   }, []);
 
   const joinLobbyByCode = (code) => {
@@ -57,9 +57,12 @@ function Home() {
       },
       body: JSON.stringify({ code, userId }),
     })
-      .then(response => response.json())
-      .then(data => setJoinedLobbies([...joinedLobbies, data]))
-      .catch(error => console.error('Error joining lobby:', error));
+    .then(response => response.json())
+    .then(data => {
+      setJoinedLobbies([...joinedLobbies, data]);
+      window.location.reload(); // Refresh the page
+    })
+    .catch(error => console.error('Error joining lobby:', error));
   };
 
   return (
