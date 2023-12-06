@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../database');
+const bcrypt = require('bcrypt'); // Assuming you are using bcrypt for password hashing
+
 
 // Route signup for a user
 router.post('/signup', async (req, res) => {
@@ -92,7 +94,7 @@ router.put('/:id', async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Internal Server Error' });
-    }
+    }   
 });
 
 // Route to delete a user by id
@@ -112,6 +114,85 @@ router.delete('/:id', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+// Existing imports and routes...
+
+// Route to change a user's password
+router.post('/change-password', async (req, res) => {
+    const { username, oldPassword, newPassword, confirmNewPassword } = req.body;
+
+    if (!username || !oldPassword || !newPassword) {
+        return res.json({
+            status: "FAILED",
+            message: "Empty fields!"
+        });
+    }
+
+    if (newPassword.length < 8) {
+        return res.json({
+            status: "FAILED",
+            message: "Password is too short!"
+        });
+    }
+
+    if (newPassword !== confirmNewPassword) {
+        return res.json({
+            status: "FAILED",
+            message: "New passwords do not match"
+        });
+    }
+
+    try {
+        // Check if the user exists
+        const [users] = await db.execute('SELECT password FROM user_account WHERE username = ?', [username]);
+
+        if (users.length === 0) {
+            return res.json({
+                status: "FAILED",
+                message: "User does not exist!"
+            });
+        }
+
+        const currentPassword = users[0].password;
+
+        // Compare oldPassword with the one in the database as string
+        if (oldPassword !== currentPassword) {
+            return res.json({
+                status: "FAILED",
+                message: "Old password is incorrect!"
+            });
+        }
+
+        // Update password in the database (assuming you still want to hash the new password)
+        // If you want to store the new password as plain text (not recommended), 
+        // then replace `hashedNewPassword` with `newPassword` in the query below
+        const hashedNewPassword = newPassword; // Change this line if you're hashing the new password
+
+        const [updateResult] = await db.execute(
+            'UPDATE user_account SET password = ? WHERE username = ?',
+            [hashedNewPassword, username]
+        );
+
+        if (updateResult.affectedRows === 0) {
+            return res.json({
+                status: "FAILED",
+                message: "An error occurred while updating the password!"
+            });
+        }
+
+        res.json({
+            status: "SUCCESS",
+            message: "Password updated successfully!"
+        });
+    } catch (err) {
+        console.error(err);
+        res.json({
+            status: "FAILED",
+            message: "An error occurred while updating the password!"
+        });
+    }
+});
+
 
 // Export the router
 module.exports = router;

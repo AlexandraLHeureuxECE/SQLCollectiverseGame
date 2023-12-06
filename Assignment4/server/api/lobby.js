@@ -98,10 +98,11 @@ router.post('/join', async (req, res) => {
             [code]
         );
 
+
         if (lobby.length === 0) {
             return res.status(404).json({ error: 'Lobby not found' });
         }
-
+        
         const lobbyId = lobby[0].LobbyID;
 
         // Step 2: Insert a record into User_Lobby
