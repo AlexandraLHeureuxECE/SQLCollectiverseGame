@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import CharacterUpdateForm from './CharacterUpdateForm';
+import CharacterAddForm from './CharacterAddForm';
+import MedalAddForm from './MedalAddForm';
 import '../cssFiles/Admin.css';
 
 function Admin() {
   const [admins, setAdmins] = useState([]);
   const [users, setUsers] = useState([]);
   const [characters, setCharacters] = useState([]);
+  const [medals, setMedals] = useState([]); 
   const [expandedAdmin, setExpandedAdmin] = useState(null);
   const [expandedUser, setExpandedUser] = useState(null);
   const [expandedCharacter, setExpandedCharacter] = useState(null);
+  const [expandedMedal, setExpandedMedal] = useState(null);
 
   useEffect(() => {
     // Fetch the list of admins from the backend when the component mounts
@@ -61,6 +65,23 @@ function Admin() {
     }
     
     fetchCharacters();
+
+    // Fetching all the medals from the backend
+    const fetchMedals = async () => {
+        try {
+            const response = await fetch('/api/medal');
+            if (response.ok) {
+                const medalsData = await response.json();
+                setMedals(medalsData);
+            } else {
+                console.error('Failed to fetch medals:', response.statusText);
+            }
+        } catch (error) {
+            console.error('An error occurred during fetch:', error);
+        }
+    }
+
+    fetchMedals();
   }, []);
 
   const toggleExpandedAdmin = (admin) => {
@@ -83,7 +104,14 @@ function Admin() {
         prevExpandedCharacter === character.CharacterID ? null : character.CharacterID
     );
     };
-    
+
+    const toggleExpandedMedal = (medal) => {
+        // Toggle the expandedMedal state for the clicked medal
+        setExpandedMedal((prevExpandedMedal) =>
+          prevExpandedMedal === medal.MedalID ? null : medal.MedalID
+        );
+      };
+
   const handleDeleteUser = async (userID) => {
     const confirmDelete = window.confirm('Are you sure you want to delete this user?');
     
@@ -108,6 +136,31 @@ function Admin() {
     }
   };
 
+    const handleAddCharacter = async (newCharacter) => {
+        try {
+            const response = await fetch('/api/character/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newCharacter),
+            });
+
+            if (response.ok) {
+                alert('Character added successfully');
+                // Refresh the character list after adding
+                const character = await response.json();
+                setCharacters([...characters, character]);
+            } else {
+                const errorData = await response.json();
+                console.error('Add failed:', errorData.error);
+                alert('Add failed');
+            }
+        } catch (error) {
+            console.error('An error occurred during add:', error);
+        }
+    };
+    
   const handleDeleteCharacter = async (characterID) => {
     const confirmDelete = window.confirm('Are you sure you want to delete this character?');
 
@@ -160,6 +213,34 @@ function Admin() {
       console.error('An error occurred during update:', error);
     }
   };
+
+  const handleAddMedal = async (newMedal) => {
+    try {
+      const response = await fetch('/api/medal/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newMedal),
+      });
+
+      if (response.ok) {
+        alert('Medal added successfully');
+        // Refresh the medal list after adding
+        const medal = await response.json();
+        setMedals([...medals, medal]);
+        //Refresh page
+        window.location.reload();
+      } else {
+        const errorData = await response.json();
+        console.error('Add failed:', errorData.error);
+        alert('Add failed');
+      }
+    } catch (error) {
+      console.error('An error occurred during add:', error);
+    }
+    };
+
 
   const renderAdminList = () => {
     return (
@@ -215,10 +296,11 @@ function Admin() {
 
   const renderCharacterList = () => {
     return (
-      <div>
-        <h2>Character List</h2>
-        <ul>
-          {characters.map((character) => (
+        <div>
+          <h2>Character List</h2>
+            <CharacterAddForm onAdd={handleAddCharacter} />
+          <ul>
+            {characters.map((character) => (
             <li key={character.CharacterID}>
               <span className="toggle-button" onClick={() => toggleExpandedCharacter(character)}>
                 {expandedCharacter === character.CharacterID ? '▼' : '►'}
@@ -231,12 +313,53 @@ function Admin() {
                   <p>Origin: {character.Origin}</p>
                   {character.Char_Icon && (
                     <div>
-                        <p>Character Image:</p>
-                        <img src={character.Char_Icon} alt={`Character ${character.Character_Name}`} />
-                    </div>
+                    <p>Character Image:</p>
+                    <img 
+                      src={character.Char_Icon} 
+                      alt={`Character ${character.Character_Name}`} 
+                      style={{ width: '120px', height: '120px' }} 
+                    />
+                  </div>
                 )}
                   <CharacterUpdateForm character={character} onUpdate={handleUpdateCharacter} />
                   <button onClick={() => handleDeleteCharacter(character.CharacterID)}>Delete Character</button>
+                </div>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
+
+  const renderMedalList = () => {
+    return (
+      <div>
+        <h2>Medal List</h2>
+        <MedalAddForm onAdd={handleAddMedal} />
+        <ul>
+          {medals.map((medal) => (
+            <li key={medal.MedalID}>
+              <span className="toggle-button" onClick={() => toggleExpandedMedal(medal)}>
+                {expandedMedal === medal.MedalID ? '▼' : '►'}
+              </span>
+              {medal.MedalName}
+              {expandedMedal === medal.MedalID && (
+                <div className="expanded-details">
+                  <p>Medal ID: {medal.MedalID}</p>
+                  <p>Medal Name: {medal.MedalName}</p>
+                  <p>Color: {medal.Color}</p>
+                  <p>Cost: {medal.Cost}</p>
+                  {medal.Icon && (
+                    <div>
+                      <p>Medal Image:</p>
+                      <img
+                        src={medal.Icon}
+                        alt={`Medal ${medal.MedalName}`}
+                        style={{ width: '120px', height: '120px' }}
+                      />
+                    </div>
+                  )}
                 </div>
               )}
             </li>
@@ -251,7 +374,8 @@ function Admin() {
       <h1>Admin Page</h1>
       {renderAdminList()}
       {renderUserList()}
-    {renderCharacterList()}
+      {renderCharacterList()}
+      {renderMedalList()}
     </div>
   );
 }
