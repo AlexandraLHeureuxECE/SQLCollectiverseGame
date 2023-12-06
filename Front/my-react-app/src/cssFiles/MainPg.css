@@ -8,10 +8,13 @@
 }
 
 /* Apply styles to the main-page */
-.main-page {
-  font-family: 'Arial', sans-serif;
-  background-color: #f0f0f0; /* Light gray background */
-  min-height: 100vh; /* Full view height */
+main {
+  min-height: 100vh; /* This will make sure 'main' takes up at least the full height of the viewport */
+  padding: 20px;
+  background-image: url('https://files.oaiusercontent.com/file-Q4lcNX1lMkcHJcAoYOdnTVaL?se=2023-12-06T01%3A16%3A58Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3Dbac0e5a6-688c-4bab-af10-67726ee5335f.webp&sig=DNWVpFON9z9YU4WJHLVYh3kdclSXdlDaYfajQwtd28A%3D');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 /* Style the header */
@@ -41,7 +44,7 @@ header h1 {
   animation: popIn 1s ease forwards, colorful 8s ease-in-out infinite;
   font-size: 2.5em; /* Larger font size for emphasis */
   font-weight: bold;
-  font-family: fan;
+  font-family: 'Press Start 2P', cursive; /* Updated font-family to video game style */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Soft shadow for depth */
 }
 
@@ -115,5 +118,43 @@ footer {
   }
   100% {
     color: #ff6347; /* Tomato */
+  }
+}
+
+/* Section title styles */
+.game-introduction h2, .get-started h2 {
+  color: #FFFFFF; /* Keep white color for text */
+  font-weight: 700; /* Make font bolder */
+  text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8); /* Increase text shadow for better legibility */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  display: inline-block; /* Only as wide as necessary */
+  padding: 5px 10px; /* Add some padding around the text */
+  border-radius: 5px; /* Optional: rounded corners for aesthetic */
+  margin-bottom: 0.5em; /* Space below the title */
+  animation: fadeInUp 1s ease-out;
+}
+
+/* Section paragraph styles */
+.game-introduction p, .get-started p {
+  color: #FFFFFF; /* White color for better visibility */
+  font-weight: 500; /* Slightly bolder font */
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8); /* Increase text shadow for better legibility */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  display: inline-block; /* Only as wide as necessary */
+  padding: 5px 10px; /* Add some padding around the text */
+  border-radius: 5px; /* Optional: rounded corners for aesthetic */
+  animation: fadeInUp 1s ease-out;
+}
+
+/* Fade in Up animation */
+@keyframes fadeInUp {
+  from {
+    transform: translate3d(0, 20px, 0);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
   }
 }

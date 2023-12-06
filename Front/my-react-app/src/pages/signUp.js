@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './../cssFiles/SignUp.css'
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
@@ -37,10 +38,12 @@ const SignupPage = () => {
     }
   };
 
+  
   return (
     <div className="signup-page">
-      <h2>Sign Up</h2>
-      <form>
+      <div className="signup-form"> {/* Use the CSS class here */}
+        <h1>Sign Up</h1> {/* Changed h2 to h1 to match your CSS */}
+        <form>
         <label>
           First Name:
           <input type="text" name="first_name" value={formData.first_name} onChange={handleInputChange} />
@@ -64,9 +67,11 @@ const SignupPage = () => {
         <button type="button" onClick={handleSignup}>
           Sign Up
         </button>
-      </form>
+        </form>
+      </div>
     </div>
   );
 };
+
 
 export default SignupPage;
