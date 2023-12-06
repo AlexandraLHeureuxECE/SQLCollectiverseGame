@@ -25,18 +25,17 @@ const LoginPage = () => {
       });
 
       if (response.ok) {
-        console.log('Login successful');
-        alert('Login successful');
-
-        // Delete the user id from local storage
+        // Clear the user data from local storage
         localStorage.removeItem('user');
 
-        //Setting the user id in local storage
+        // Store the user data in local storage
         const user = await response.json();
         localStorage.setItem('user', JSON.stringify(user));
         console.log(user);
+        
+        console.log('Login successful');
+        alert('Login successful');
 
-        // Navigate to the home page
         navigate('/Home'); 
       } else {
         const errorData = await response.json();

@@ -5,6 +5,7 @@ const lobbiesRouter = require('./api/lobby');
 const charactersRouter = require('./api/character');
 const medalsRouter = require('./api/medal');
 const tradesRouter = require('./api/trade');
+const adminRouter = require('./api/admin');
 const app = express();
 
 app.use(bodyParser.json());
@@ -15,6 +16,7 @@ app.use('/api/lobby', lobbiesRouter);
 app.use('/api/character', charactersRouter);
 app.use('/api/medal', medalsRouter);
 app.use('/api/trade', tradesRouter);
+app.use('/api/admin', adminRouter);
 
 const port = process.env.PORT || 5000;
 
