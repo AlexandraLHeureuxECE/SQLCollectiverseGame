@@ -36,9 +36,9 @@ const AdminSignup = () => {
 
       if (response.ok) {
         console.log('Admin signed up successfully');
-            
+
         alert('Admin signed up successfully');
-        navigate('/login');
+        navigate('/AdminLogin');
       } else {
         const errorData = await response.json();
         console.error('Signup failed:', errorData.error);
