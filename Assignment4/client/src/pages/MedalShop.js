@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 const MedalShop = () => {
   const [medals, setMedals] = useState([]);
@@ -9,22 +8,23 @@ const MedalShop = () => {
 
   useEffect(() => {
     // Fetch all available medals from the backend
-    axios.get('/api/medals')
-      .then(response => {
-        setMedals(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching medals: ', error);
-      });
+    fetch('http://localhost:3000/api/medal')
+      .then(response => response.json())
+      .then(data => setMedals(data))
+      .catch(error => console.error('Error fetching medals: ', error));
 
     // Fetch characters and medals of the logged-in user
-    
+
+
+
+
+
+
 
 
 
 
     // TO BE EDITED WHEN CONNECTED WITH OTHER CODE
-
     const userId = 1;
     const lobbyId = 1000;
 
@@ -35,21 +35,16 @@ const MedalShop = () => {
 
 
 
-    axios.get(`/api/characters/user/${userId}/lobby/${lobbyId}`)
-      .then(response => {
-        setUserCharacters(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching user characters: ', error);
-      });
 
-    axios.get(`/api/medals/user/${userId}/lobby/${lobbyId}`)
-      .then(response => {
-        setUserMedals(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching user medals: ', error);
-      });
+    fetch(`http://localhost:3000/api/character/user/${userId}/lobby/${lobbyId}`)
+      .then(response => response.json())
+      .then(data => setUserCharacters(data))
+      .catch(error => console.error('Error fetching user characters: ', error));
+
+    fetch(`http://localhost:3000/api/medal/user/${userId}/lobby/${lobbyId}`)
+      .then(response => response.json())
+      .then(data => setUserMedals(data))
+      .catch(error => console.error('Error fetching user medals: ', error));
   }, []); // Run only once when the component mounts
 
   const calculateUserCharacterValue = () => {
@@ -75,6 +70,7 @@ const MedalShop = () => {
 
 
 
+
       // TO BE EDITED WHEN CONNECTED WITH OTHER CODE
       const userId = 1;
       const lobbyId = 1000;
@@ -88,21 +84,25 @@ const MedalShop = () => {
 
 
 
-      axios.post('/api/medals/add-to-user', {
-        userId: userId,
-        medalId: selectedMedal.MedalID,
-        lobbyId: lobbyId
+      fetch('http://localhost:3000/api/medal/add-to-user', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: userId,
+          medalId: selectedMedal.MedalID,
+          lobbyId: lobbyId,
+        }),
       })
-        .then(response => {
+        .then(response => response.json())
+        .then(data => {
           alert('Medal claimed successfully');
           // Refresh user medals
-          axios.get(`/api/medals/user/${userId}/lobby/${lobbyId}`)
-            .then(response => {
-              setUserMedals(response.data);
-            })
-            .catch(error => {
-              console.error('Error fetching user medals: ', error);
-            });
+          fetch(`http://localhost:3000/api/medal/user/${userId}/lobby/${lobbyId}`)
+            .then(response => response.json())
+            .then(data => setUserMedals(data))
+            .catch(error => console.error('Error fetching user medals: ', error));
         })
         .catch(error => {
           console.error('Error claiming medal: ', error);

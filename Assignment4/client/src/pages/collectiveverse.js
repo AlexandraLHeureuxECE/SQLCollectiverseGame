@@ -11,6 +11,18 @@ const CharacterList = () => {
     const shuffleAmount=10;
     const [selectedCharacterId, setSelectedCharacterId] = useState(null);
 
+    
+    useEffect(() => {
+        axios.get('/api/character')
+            .then(response => {
+                setCharacters(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching data: ', error);
+            });
+    }, []);
+
+
     const deleteCharacter = () => {
         if (selectedCharacterId) {
             axios.delete(`/api/character/${selectedCharacterId}`)
@@ -25,18 +37,6 @@ const CharacterList = () => {
                 });
         }
     };
-    useEffect(() => {
-        axios.get('/api/character')
-            .then(response => {
-                setCharacters(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching data: ', error);
-            });
-    }, []);
-
-
-
     const getUserCharacters = () => {
         axios.get(`/api/character/user/${userId}/lobby/${lobbyId}`)
             .then(response => {

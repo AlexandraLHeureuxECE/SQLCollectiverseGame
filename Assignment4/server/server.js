@@ -6,7 +6,11 @@ const charactersRouter = require('./api/character');
 const medalsRouter = require('./api/medal');
 const tradesRouter = require('./api/trade');
 const adminRouter = require('./api/admin');
+const cors = require('cors');
+
 const app = express();
+
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
