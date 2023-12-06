@@ -29,7 +29,6 @@ router.post('/signup', async (req, res) => {
     }
 });
 
-
 // Route login for a user
 router.post('/login', async (req, res) => {
     try {
