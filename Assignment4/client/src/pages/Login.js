@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import '../cssFiles/Login.css';
 
 const LoginPage = () => {
+  const [loggedInUser, setLoggedInUser] = useState(null);
+
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -32,10 +34,10 @@ const LoginPage = () => {
         const user = await response.json();
         localStorage.setItem('user', JSON.stringify(user));
         console.log(user);
-        
+       
         console.log('Login successful');
         alert('Login successful');
-
+        // localStorage.setItem('userId', response.data[0].UserID);
         navigate('/Home'); 
       } else {
         const errorData = await response.json();

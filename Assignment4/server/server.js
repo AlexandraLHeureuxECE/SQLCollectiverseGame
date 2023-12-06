@@ -6,7 +6,11 @@ const charactersRouter = require('./api/character');
 const medalsRouter = require('./api/medal');
 const tradesRouter = require('./api/trade');
 const adminRouter = require('./api/admin');
+const cors = require('cors');
+
 const app = express();
+
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -18,7 +22,7 @@ app.use('/api/medal', medalsRouter);
 app.use('/api/trade', tradesRouter);
 app.use('/api/admin', adminRouter);
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 
 // Timeout after 10 seconds
 app.use((req, res, next) => {
