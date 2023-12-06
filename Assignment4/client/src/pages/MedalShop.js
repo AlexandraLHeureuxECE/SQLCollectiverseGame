@@ -15,21 +15,10 @@ const MedalShop = () => {
 
     // Fetch characters and medals of the logged-in user
 
-
-
-
-
-
-
-
-
-
     // TO BE EDITED WHEN CONNECTED WITH OTHER CODE
-    const userId = 1;
+    const userArray = JSON.parse(localStorage.getItem('user'));
+    const userId = userArray[0].UserID;
     const lobbyId = 1000;
-
-
-
 
 
 
@@ -72,8 +61,9 @@ const MedalShop = () => {
 
 
       // TO BE EDITED WHEN CONNECTED WITH OTHER CODE
-      const userId = 1;
-      const lobbyId = 1000;
+        const userArray = JSON.parse(localStorage.getItem('user'));
+        const userId = userArray[0].UserID;
+        const lobbyId = 1000;
 
 
 
@@ -84,17 +74,17 @@ const MedalShop = () => {
 
 
 
-      fetch('http://localhost:3000/api/medal/add-to-user', {
+        fetch('http://localhost:3000/api/medal/add-to-user', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userId: userId,
-          medalId: selectedMedal.MedalID,
-          lobbyId: lobbyId,
+            userId: userId,
+            medalId: selectedMedal.MedalID,
+            lobbyId: lobbyId,
         }),
-      })
+        })
         .then(response => response.json())
         .then(data => {
           alert('Medal claimed successfully');
