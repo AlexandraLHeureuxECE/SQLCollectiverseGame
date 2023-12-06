@@ -68,23 +68,27 @@ function Dashboard() {
   };
 
   const leaveLobby = (lobbyId) => {
-    const userId = JSON.parse(localStorage.getItem('user'))[0].UserID;
-
-    fetch('/api/lobby/leave', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ userId, lobbyId }),
-    })
-    .then(response => response.json())
-    .then(() => {
-      // Update the joinedLobbies state to remove the left lobby
-      setJoinedLobbies(joinedLobbies.filter(lobby => lobby.LobbyID !== lobbyId));
-    })
-    .catch(error => console.error('Error leaving lobby:', error));
+    const confirmLeave = window.confirm("Are you sure you want to leave this lobby?");
+    
+    if (confirmLeave) {
+      const userId = JSON.parse(localStorage.getItem('user'))[0].UserID;
+  
+      fetch('/api/lobby/leave', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId, lobbyId }),
+      })
+      .then(response => response.json())
+      .then(() => {
+        // Update the joinedLobbies state to remove the left lobby
+        setJoinedLobbies(joinedLobbies.filter(lobby => lobby.LobbyID !== lobbyId));
+      })
+      .catch(error => console.error('Error leaving lobby:', error));
+    }
   };
-
+  
   return (
     <div className="dashboard">
       <h1>Dashboard</h1>

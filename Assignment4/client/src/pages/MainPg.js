@@ -23,9 +23,7 @@ const MainPage = () => {
             embark on adventures, and build your unique collection.
           </p>
         </section>
-        <section className="get-started">
-          <h2>Get Started</h2>
-        </section>
+
       </main>
       <footer>
         <p>© 2023 Collectiverse. All rights reserved.</p>
