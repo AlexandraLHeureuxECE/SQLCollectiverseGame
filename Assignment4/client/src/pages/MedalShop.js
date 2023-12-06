@@ -49,7 +49,7 @@ const MedalShop = () => {
 
   const calculateUserCharacterValue = () => {
     // Calculate the cumulative value of characters the user possesses
-    return userCharacters.reduce((totalValue, character) => totalValue + character.Character_Value, 0);
+    return userCharacters.reduce((totalValue, character) => totalValue + parseFloat(character.Character_Value), 0);
   };
 
   const handleMedalSelect = (medal) => {
